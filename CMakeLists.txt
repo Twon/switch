@@ -27,11 +27,27 @@ target_compile_features(cpp_switch
 add_executable(test_cpp_switch "")
 target_sources(test_cpp_switch
     PRIVATE
+        expand.hpp
+        switch.hpp
         switch.test.cpp
+)
+
+target_compile_options(test_cpp_switch
+    PRIVATE
+        -fmacro-backtrace-limit=0
+    #    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:AppleClang>>:-ftime-report>
 )
 
 target_link_libraries(test_cpp_switch
     PRIVATE
         cpp_switch
         Catch2::Catch2
+        Boost::boost
+)
+
+set_target_properties(test_cpp_switch 
+    PROPERTIES
+        CXX_STANDARD 20
+        CXX_STANDARD_REQUIRED YES
+        CXX_EXTENSIONS NO
 )
