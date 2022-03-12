@@ -34,7 +34,7 @@ target_sources(test_cpp_switch
 
 target_compile_options(test_cpp_switch
     PRIVATE
-        -fmacro-backtrace-limit=0
+    #    -fmacro-backtrace-limit=0
     #    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:AppleClang>>:-ftime-report>
 )
 
@@ -51,3 +51,13 @@ set_target_properties(test_cpp_switch
         CXX_STANDARD_REQUIRED YES
         CXX_EXTENSIONS NO
 )
+
+enable_testing()
+add_test(
+    NAME test_cpp_switch
+    COMMAND test_cpp_switch
+    WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/contrib)
+include(Catch)
+catch_discover_tests(test_cpp_switch)
